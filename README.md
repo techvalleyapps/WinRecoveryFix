@@ -36,10 +36,8 @@ powershell -ExecutionPolicy Bypass -File setup-recovery-oem.ps1
 Open **PowerShell as Administrator** and run:
 
 ```powershell
-irm "https://raw.githubusercontent.com/YOU/REPO/main/setup-recovery-oem.ps1" | iex
+irm "https://raw.githubusercontent.com/techvalleyapps/WinRecoveryFix/main/setup-recovery-oem.ps1" | iex
 ```
-
-> Replace `YOU/REPO` with your actual GitHub username and repository name.
 
 ---
 

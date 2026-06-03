@@ -10,7 +10,7 @@
         powershell -ExecutionPolicy Bypass -File setup-recovery-oem.ps1
 
     Option B - Direct from web (host this file online):
-        irm "https://raw.githubusercontent.com/YOU/REPO/main/setup-recovery-oem.ps1" | iex
+        irm "https://raw.githubusercontent.com/techvalleyapps/WinRecoveryFix/main/setup-recovery-oem.ps1" | iex
 #>
 
 function Step { param($m) Write-Host "`n>> $m" -ForegroundColor Cyan }
