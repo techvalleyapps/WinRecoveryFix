@@ -15,7 +15,17 @@ Places three files into `C:\Recovery\OEM\`:
 |---|---|
 | `ResetConfig.xml` | Tells Windows Reset to run `Restore.cmd` after re-imaging |
 | `Restore.cmd` | Copies `unattend.xml` and sets registry keys to bypass NRO |
-| `unattend.xml` | Creates local account `User / 1233`, sets en-GB locale, auto-login |
+| `unattend.xml` | Creates your chosen local account, sets en-GB locale, auto-login |
+
+When you run the script it will prompt:
+
+```
+  Local account username (default: User):
+  Local account password (default: 1233):
+  Proceed? (Y/n):
+```
+
+Press Enter to accept the defaults, or type your own values.
 
 ---
 
@@ -52,16 +62,17 @@ irm "https://raw.githubusercontent.com/techvalleyapps/WinRecoveryFix/main/setup-
 ## After running
 
 Go to **Settings → System → Recovery → Reset this PC → Remove everything**.  
-On next boot after reset you will get a local account (`User`, password `1233`) — no online account prompt.
+On next boot after reset you will get the local account you configured during setup — no online account prompt.
 
 ---
 
 ## Customising
 
-Edit the `unattend.xml` section inside the script before running to change:
+The script prompts for username and password at runtime — no editing needed for those.
+
+To change other defaults, edit the script before running:
 
 - **Computer name** — `<ComputerName>WIN11-PC</ComputerName>`
-- **Username / password** — `<Name>User</Name>` / `<Value>1233</Value>`
 - **Locale / timezone** — `en-GB` / `GMT Standard Time`
 
 ---
