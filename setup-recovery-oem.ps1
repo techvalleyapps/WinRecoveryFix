@@ -17,6 +17,22 @@ function Step { param($m) Write-Host "`n>> $m" -ForegroundColor Cyan }
 function OK   { param($m) Write-Host "   OK: $m" -ForegroundColor Green }
 function Fail { param($m) Write-Host "   ERROR: $m" -ForegroundColor Red; exit 1 }
 
+# ── User input ────────────────────────────────────────────────────────────────
+Write-Host "`n=== WinRecoveryFix Setup ===" -ForegroundColor Yellow
+
+$OEMUser = Read-Host "  Local account username (default: User)"
+if ([string]::IsNullOrWhiteSpace($OEMUser)) { $OEMUser = "User" }
+
+$OEMPass = Read-Host "  Local account password (default: 1233)"
+if ([string]::IsNullOrWhiteSpace($OEMPass)) { $OEMPass = "1233" }
+
+Write-Host ""
+Write-Host "  Username : $OEMUser" -ForegroundColor Cyan
+Write-Host "  Password : $OEMPass" -ForegroundColor Cyan
+$confirm = Read-Host "  Proceed? (Y/n)"
+if ($confirm -match '^[Nn]') { Write-Host "Aborted." -ForegroundColor Yellow; exit 0 }
+# ──────────────────────────────────────────────────────────────────────────────
+
 Step "Creating C:\Recovery if missing..."
 if (-not (Test-Path "C:\Recovery")) {
     New-Item -ItemType Directory -Path "C:\Recovery" | Out-Null
@@ -61,7 +77,7 @@ exit /b 0
 OK "Restore.cmd"
 
 Step "Writing unattend.xml..."
-@'
+@"
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend"
           xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
@@ -108,18 +124,18 @@ Step "Writing unattend.xml..."
       <UserAccounts>
         <LocalAccounts>
           <LocalAccount wcm:action="add">
-            <Name>User</Name>
-            <DisplayName>User</DisplayName>
+            <Name>$OEMUser</Name>
+            <DisplayName>$OEMUser</DisplayName>
             <Group>Administrators</Group>
-            <Password><Value>1233</Value><PlainText>true</PlainText></Password>
+            <Password><Value>$OEMPass</Value><PlainText>true</PlainText></Password>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>
       <AutoLogon>
         <Enabled>true</Enabled>
-        <Username>User</Username>
+        <Username>$OEMUser</Username>
         <LogonCount>999</LogonCount>
-        <Password><Value>1233</Value><PlainText>true</PlainText></Password>
+        <Password><Value>$OEMPass</Value><PlainText>true</PlainText></Password>
       </AutoLogon>
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
@@ -137,7 +153,7 @@ Step "Writing unattend.xml..."
   </settings>
 
 </unattend>
-'@ | Set-Content "C:\Recovery\OEM\unattend.xml" -Encoding UTF8
+"@ | Set-Content "C:\Recovery\OEM\unattend.xml" -Encoding UTF8
 OK "unattend.xml"
 
 Step "Restoring C:\Recovery hidden/system attributes..."
@@ -159,7 +175,7 @@ if ($ok) {
 
   Reset PC > Remove all files will now always:
   - Skip online account screen
-  - Create local account: User / 1233
+  - Create local account: $OEMUser / $OEMPass
   - Auto-login on first boot
 
   This survives every future reset. Never run this again.
