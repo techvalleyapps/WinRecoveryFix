@@ -15,9 +15,9 @@ Places three files into `C:\Recovery\OEM\`:
 |---|---|
 | `ResetConfig.xml` | Tells Windows Reset to run `Restore.cmd` after re-imaging |
 | `Restore.cmd` | Copies `unattend.xml` and sets registry keys to bypass NRO |
-| `unattend.xml` | Skips online account, shows Windows local account creation screen |
+| `unattend.xml` | Skips all OOBE screens, auto-creates local account `User` with no password |
 
-No credentials are hardcoded. After reset, Windows shows its standard **"Create a local account"** screen where you enter your own username and password.
+After reset, Windows boots straight to the desktop — no internet screen, no account prompts. The local account `User` is created with an empty password. You can set a password afterwards via Settings.
 
 ---
 
@@ -54,13 +54,13 @@ irm "https://raw.githubusercontent.com/techvalleyapps/WinRecoveryFix/main/setup-
 ## After running
 
 Go to **Settings → System → Recovery → Reset this PC → Remove everything**.  
-On next boot after reset, Windows will show the standard local account creation screen — enter any username and password you like. No Microsoft account prompt.
+Windows will skip all setup screens and boot straight to the desktop as local account `User` with no password. You can rename the account or set a password afterwards in Settings.
 
 ---
 
 ## Customising
 
-Username and password are set by you during the Windows OOBE screen after reset — nothing to edit.
+The account is auto-created as `User` with no password — no prompts at all after reset.
 
 To change other defaults, edit the script before running:
 
