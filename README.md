@@ -15,17 +15,9 @@ Places three files into `C:\Recovery\OEM\`:
 |---|---|
 | `ResetConfig.xml` | Tells Windows Reset to run `Restore.cmd` after re-imaging |
 | `Restore.cmd` | Copies `unattend.xml` and sets registry keys to bypass NRO |
-| `unattend.xml` | Creates your chosen local account, sets en-GB locale, auto-login |
+| `unattend.xml` | Skips online account, shows Windows local account creation screen |
 
-When you run the script it will prompt:
-
-```
-  Local account username (default: User):
-  Local account password (default: 1233):
-  Proceed? (Y/n):
-```
-
-Press Enter to accept the defaults, or type your own values.
+No credentials are hardcoded. After reset, Windows shows its standard **"Create a local account"** screen where you enter your own username and password.
 
 ---
 
@@ -62,13 +54,13 @@ irm "https://raw.githubusercontent.com/techvalleyapps/WinRecoveryFix/main/setup-
 ## After running
 
 Go to **Settings → System → Recovery → Reset this PC → Remove everything**.  
-On next boot after reset you will get the local account you configured during setup — no online account prompt.
+On next boot after reset, Windows will show the standard local account creation screen — enter any username and password you like. No Microsoft account prompt.
 
 ---
 
 ## Customising
 
-The script prompts for username and password at runtime — no editing needed for those.
+Username and password are set by you during the Windows OOBE screen after reset — nothing to edit.
 
 To change other defaults, edit the script before running:
 
