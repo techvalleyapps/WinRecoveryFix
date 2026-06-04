@@ -99,12 +99,28 @@ Step "Writing unattend.xml..."
         <HideEULAPage>true</HideEULAPage>
         <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
         <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-        <HideLocalAccountScreen>false</HideLocalAccountScreen>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
         <NetworkLocation>Work</NetworkLocation>
         <ProtectYourPC>3</ProtectYourPC>
-        <SkipMachineOOBE>false</SkipMachineOOBE>
-        <SkipUserOOBE>false</SkipUserOOBE>
+        <SkipMachineOOBE>true</SkipMachineOOBE>
+        <SkipUserOOBE>true</SkipUserOOBE>
       </OOBE>
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Name>User</Name>
+            <DisplayName>User</DisplayName>
+            <Group>Administrators</Group>
+            <Password><Value></Value><PlainText>true</PlainText></Password>
+          </LocalAccount>
+        </LocalAccounts>
+      </UserAccounts>
+      <AutoLogon>
+        <Enabled>true</Enabled>
+        <Username>User</Username>
+        <LogonCount>999</LogonCount>
+        <Password><Value></Value><PlainText>true</PlainText></Password>
+      </AutoLogon>
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
           <Order>1</Order>
@@ -142,9 +158,10 @@ if ($ok) {
   ALL DONE.
 
   Reset PC > Remove all files will now always:
+  - Skip internet connection screen
   - Skip online account screen
-  - Show Windows local account creation screen
-  - You choose your own username and password at that point
+  - Skip local account creation screen
+  - Auto-login as: User (no password)
 
   This survives every future reset. Never run this again.
 ==============================================================
