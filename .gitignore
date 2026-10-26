@@ -19,3 +19,9 @@ $RECYCLE.BIN/
 # Logs / temp
 *.log
 *.tmp
+
+# Local AI tooling files
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.mcp.json
